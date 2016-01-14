@@ -74,7 +74,7 @@ public class estandard_activity extends AppCompatActivity {
 
         
 
-        Toast.makeText(estandard_activity.this, LayerAlimentadores.getDrawOrder(1), Toast.LENGTH_LONG).show();
+        Toast.makeText(estandard_activity.this, "hello", Toast.LENGTH_LONG).show();
 
 
         myMapView.setOnStatusChangedListener(new OnStatusChangedListener() {
@@ -116,14 +116,7 @@ public class estandard_activity extends AppCompatActivity {
                     }
                 }
             }
-
-
-
         });
-
-
-
-
     }
 
     @Override
@@ -132,9 +125,6 @@ public class estandard_activity extends AppCompatActivity {
         menuInflater.inflate(R.menu.menus, menu);
 
         return super.onCreateOptionsMenu(menu);
-
-
-
     }
 
     @Override
