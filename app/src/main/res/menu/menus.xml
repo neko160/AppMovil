@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+<item
+    android:id="@+id/menu_mapa"
+    android:title="Cambiar Mapa"
+    android:icon="@drawable/ic_menu_map"
+    app:showAsAction="always"
+    >
+    <menu>
+        <!-- Refresh -->
+        <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/Road"
+            android:showAsAction="ifRoom"
+            android:checked="true"
+            android:title="Road"/>
+        <!-- Help -->
+        <item
+            android:id="@+id/Aerial"
+            android:showAsAction="never"
+
+            android:title="Aerial"/>
+        <!-- Check updates -->
+        <item
+            android:id="@+id/AerialWithLabel"
+            android:showAsAction="never"
+            android:title="AerialWithLabel"/>
+        <item
+            android:id="@+id/Chilquinta"
+            android:showAsAction="never"
+            android:title="Chilquinta"/>
+        </group>
+    </menu>
+
+</item>
+
+</menu>
