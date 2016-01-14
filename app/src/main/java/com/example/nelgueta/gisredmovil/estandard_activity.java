@@ -37,7 +37,7 @@ public class estandard_activity extends AppCompatActivity {
 
 
 
-//algunos cambios
+//algunos cambios 2
     Polygon mCurrentMapExtent = null;
 
     String featureServiceURL;
