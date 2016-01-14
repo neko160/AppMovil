@@ -35,9 +35,6 @@ public class estandard_activity extends AppCompatActivity {
     final BingMapsLayer mAerialWLabelBaseMaps = new BingMapsLayer(BingKey, BingMapsLayer.MapStyle.AERIAL_WITH_LABELS);
     final BingMapsLayer mRoadBaseMaps = new BingMapsLayer(BingKey, BingMapsLayer.MapStyle.ROAD);
 
-
-
-
     Polygon mCurrentMapExtent = null;
 
     String featureServiceURL;
@@ -72,7 +69,6 @@ public class estandard_activity extends AppCompatActivity {
 
         myMapView.addLayer(LayerAlimentadores);
 
-        
 
         Toast.makeText(estandard_activity.this, LayerAlimentadores.getDrawOrder(1), Toast.LENGTH_LONG).show();
 
@@ -121,9 +117,6 @@ public class estandard_activity extends AppCompatActivity {
 
         });
 
-
-
-
     }
 
     @Override
@@ -165,7 +158,7 @@ public class estandard_activity extends AppCompatActivity {
                 myMapView.addLayer(mAerialWLabelBaseMaps);
 
                 if (item.isChecked()) item.setChecked(false);
-                else item.setChecked(true);     ;
+                else item.setChecked(true);
                 return true;
             /*case R.id.Chilquinta:
                 myMapView.addLayer(mAerialBaseMaps);
