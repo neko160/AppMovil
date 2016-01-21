@@ -1,47 +1,51 @@
 package com.example.nelgueta.gisredmovil;
 
-import android.graphics.AvoidXfermode;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.esri.android.map.Layer;
-import com.esri.android.map.MapOptions;
 import com.esri.android.map.MapView;
 import com.esri.android.map.ags.ArcGISDynamicMapServiceLayer;
 import com.esri.android.map.ags.ArcGISFeatureLayer;
-import com.esri.android.map.ags.ArcGISTiledMapServiceLayer;
 import com.esri.android.map.bing.BingMapsLayer;
 import com.esri.android.map.event.OnStatusChangedListener;
 import com.esri.core.geometry.Polygon;
+
+
 import com.esri.core.io.EsriSecurityException;
 import com.esri.core.io.UserCredentials;
-import com.esri.core.portal.WebMapLayer;
 
 /**
  * Created by nelgueta on 11/01/2016.
  */
 public class estandard_activity extends AppCompatActivity {
 
+
     MapView myMapView = null;
 
+    //Set bing Maps
     String BingKey = "Asrn2IMtRwnOdIRPf-7q30XVUrZuOK7K2tzhCACMg7QZbJ4EPsOcLk6mE9-sNvUe";
     final BingMapsLayer mAerialBaseMaps = new BingMapsLayer(BingKey, BingMapsLayer.MapStyle.AERIAL);
     final BingMapsLayer mAerialWLabelBaseMaps = new BingMapsLayer(BingKey, BingMapsLayer.MapStyle.AERIAL_WITH_LABELS);
     final BingMapsLayer mRoadBaseMaps = new BingMapsLayer(BingKey, BingMapsLayer.MapStyle.ROAD);
 
-
-
-//algunos cambios 2
+    //set Extent inicial
     Polygon mCurrentMapExtent = null;
 
+    //Declara String de Layer
     String featureServiceURL;
+    String LayerTramosURL;
+    String LayerBaseChqURL;
+
+    //Declara Tipo de Layer
     ArcGISFeatureLayer LayerAlimentadores;
+    ArcGISDynamicMapServiceLayer LayerTramos;
+    ArcGISDynamicMapServiceLayer LyerMapaChq;
+
+  //Declara Menu Bar
+    android.app.ActionBar mActionBar;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,34 +53,44 @@ public class estandard_activity extends AppCompatActivity {
         setContentView(R.layout.standard);
 
         myMapView = (MapView) findViewById(R.id.map);
-
-        myMapView.addLayer(mRoadBaseMaps);
-
+        //Set color de fondo mapa base
+        myMapView.setMapBackground(0xffffff, 0xffffff, 10, 10);
+        //Set logo Esri
         myMapView.setEsriLogoVisible(true);
+
         myMapView.enableWrapAround(true);
 
+        //Obtiene menubar desde menu/memu.xml
+        mActionBar = getActionBar();
+
+        //Declara Credenciales
         UserCredentials Credenciales = new UserCredentials();
 
-
-
+        //Get Credenciales String
         final String user = this.getResources().getString(R.string.user);
         final String pwd = this.getResources().getString(R.string.password);
 
+        //Set Credenciales
         Credenciales.setUserAccount(user, pwd);
 
+        //Get Urls String Urls service
         featureServiceURL = this.getResources().getString(R.string.url_service_1);
+        LayerTramosURL = this.getResources().getString(R.string.url_service_tramos);
+        LayerBaseChqURL = this.getResources().getString(R.string.LayerBaseChqURL);
 
+        //Crea Layer para carga
         LayerAlimentadores = new ArcGISFeatureLayer(featureServiceURL, ArcGISFeatureLayer.MODE.SNAPSHOT,Credenciales);
         LayerAlimentadores.setVisible(true);
 
+        LayerTramos = new ArcGISDynamicMapServiceLayer(LayerTramosURL,null,Credenciales);
+        LyerMapaChq = new ArcGISDynamicMapServiceLayer(LayerBaseChqURL,null, Credenciales);
 
-        myMapView.addLayer(LayerAlimentadores);
+        //Agrega layers al mapa
+        myMapView.addLayer(mRoadBaseMaps, 0);
+        myMapView.addLayer(LayerAlimentadores, 1);
+        myMapView.addLayer(LayerTramos, 2);
 
-        
-
-        Toast.makeText(estandard_activity.this, "hello", Toast.LENGTH_LONG).show();
-
-
+        //Cabios en el mapa
         myMapView.setOnStatusChangedListener(new OnStatusChangedListener() {
             @Override
             public void onStatusChanged(Object o, STATUS status) {
@@ -110,7 +124,7 @@ public class estandard_activity extends AppCompatActivity {
                         if (o instanceof ArcGISFeatureLayer) {
                             // Set user credential through username and password
                             UserCredentials creds = new UserCredentials();
-                            creds.setUserAccount(user,pwd);
+                            creds.setUserAccount(user, pwd);
                             LayerAlimentadores.reinitializeLayer(creds);
                         }
                     }
@@ -121,49 +135,54 @@ public class estandard_activity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menus, menu);
-
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menus, menu);
+        return true;
     }
 
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Save the current extent of the map before changing the map.
-        mCurrentMapExtent = myMapView.getExtent();
+        // Handle user pressing the action bar menu items.
+        boolean retVal = false;
 
-        // Handle menu item selection.
+        // Get the current map directly from this activity.
+        MapView currentMap = (MapView) this.findViewById(R.id.map);
+
+        // Based on the menu item selected, switch the map fragment.
+        String mapUrl = null;
+
         switch (item.getItemId()) {
             case R.id.Road:
-          //      myMapView.removeLayer(mAerialWLabelBaseMaps);
-          //      myMapView.removeLayer(mAerialBaseMaps);
-                myMapView.addLayer(mRoadBaseMaps);
                 if (item.isChecked()) item.setChecked(false);
                 else item.setChecked(true);
+                myMapView.removeLayer(0);
+                myMapView.addLayer(mRoadBaseMaps,0);
                 return true;
             case R.id.Aerial:
-          //      myMapView.removeLayer(mAerialWLabelBaseMaps);
-          //      myMapView.removeLayer(mRoadBaseMaps);
-                myMapView.addLayer(mAerialBaseMaps);
-
                 if (item.isChecked()) item.setChecked(false);
                 else item.setChecked(true);
+                myMapView.removeLayer(0);
+                myMapView.addLayer(mAerialBaseMaps, 0);
                 return true;
             case R.id.AerialWithLabel:
-           //     myMapView.removeLayer(mAerialBaseMaps);
-           //     myMapView.removeLayer(mRoadBaseMaps);
-                myMapView.addLayer(mAerialWLabelBaseMaps);
-
-                if (item.isChecked()) item.setChecked(false);
-                else item.setChecked(true);     ;
-                return true;
-            /*case R.id.Chilquinta:
-                myMapView.addLayer(mAerialBaseMaps);
                 if (item.isChecked()) item.setChecked(false);
                 else item.setChecked(true);
-                return true;*/
+                myMapView.removeLayer(0);
+                myMapView.addLayer(mAerialWLabelBaseMaps, 0);
+                return true;
+            case R.id.Chilquinta:
+                if (item.isChecked()) item.setChecked(false);
+                else item.setChecked(true);
+                myMapView.removeLayer(0);
+                myMapView.addLayer(LyerMapaChq, 0);
+
+                return true;
+
             default:
-                return super.onOptionsItemSelected(item);
+                retVal = super.onOptionsItemSelected(item);
+                break;
         }
+
+        return retVal;
     }
+
+
 }

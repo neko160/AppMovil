@@ -11,10 +11,20 @@
 
     <!--Servicios Arcgis-->
     <string name="url_service_1">http://gisred.chilquinta.cl:5555/arcgis/rest/services/Chilquinta_006/Equipos_pto_006/MapServer/0</string>
-
-        <!--<string name="url_service_1"> http://gisred.chilquinta.cl:5555/arcgis/rest/services/Chilquinta_006/Tramos_006/MapServer/0</string>-->
+    <string name="url_service_tramos"> http://gisred.chilquinta.cl:5555/arcgis/rest/services/Chilquinta_006/Tramos_006/MapServer</string>
   <!--  <string name="url_service_1">http://gisred.chilquinta.cl:5555/arcgis/rest/services/Chilquinta_006/Nodos_006/MapServer/0</string>-->
     <string name="user">vialactea\\nelgueta</string>
     <string name="password">Nov.2015</string>
+
+
+    <string name="map1">Topographic Map</string>
+    <string name="map2">Streets Map</string>
+    <!-- Button name -->
+    <string name="switchToMap1ButtonText">Go to Topographic Map</string>
+    <string name="switchToMap2ButtonText">Go to Streets Map</string>
+    <!-- Map URl's -->
+    <string name="topo">"http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer"</string>
+    <string name="streets">http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer</string>
+    <string name="LayerBaseChqURL">http://gisred.chilquinta.cl:5555/Arcgis/rest/services/MapaBase/MapServer</string>
 
 </resources>

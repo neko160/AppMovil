@@ -11,7 +11,7 @@
         android:id="@+id/map"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        mapoptions.ZoomLevel="13"
-        mapoptions.center="-33.05867, -71.60876" />
+        initExtent = "-8016834.2070 -3932860.5244 -7870075.1127 -3862920.6435"
+      />
 
 </LinearLayout>
