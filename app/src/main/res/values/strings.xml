@@ -13,8 +13,8 @@
     <string name="url_service_1">http://gisred.chilquinta.cl:5555/arcgis/rest/services/Chilquinta_006/Equipos_pto_006/MapServer/0</string>
     <string name="url_service_tramos"> http://gisred.chilquinta.cl:5555/arcgis/rest/services/Chilquinta_006/Tramos_006/MapServer</string>
   <!--  <string name="url_service_1">http://gisred.chilquinta.cl:5555/arcgis/rest/services/Chilquinta_006/Nodos_006/MapServer/0</string>-->
-    <string name="user">vialactea\\nelgueta</string>
-    <string name="password">Nov.2015</string>
+    <string name="user"></string>
+    <string name="password"></string>
 
 
     <string name="map1">Topographic Map</string>
